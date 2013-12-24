@@ -1,0 +1,6 @@
+.settings/
+target/
+.project
+.classpath
+twitter4j.properties
+
