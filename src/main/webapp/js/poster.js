@@ -40,14 +40,20 @@
 		if (running) {
 			clearInterval(timerId);
 			log.append("Timer stopped.<br/>");
+			
+			intervalField.prop("disabled", false);
+			startButton.text("Start");
 		} else {
 			log.append("Timer started.<br/>");
 			
 			// Update immediately
-			createStatus();
+			//createStatus();
 			
 			// Get the input value and convert it from minutes to milliseconds
 			timerId = setInterval(createStatus, intervalField.val() * 60 * 1000);
+			
+			intervalField.prop("disabled", true);
+			startButton.text("Stop");
 		}
 		running = !running;
 	});

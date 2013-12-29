@@ -17,3 +17,11 @@
 .text-justify {
 	text-align: justify;
 }
+
+#start {
+	outline: none;
+}
+
+#log {
+	margin-top: 30px;
+}
