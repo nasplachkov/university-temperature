@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Twitter Applcation</title>
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap3/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="./css/twitter.css" />
+</head>
+<body>
+	<div class="center mini-container">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Terms of conduct</h3>
+			</div>
+			<div class="panel-body text-center">
+				<p><img src="https://cdn1.iconfinder.com/data/icons/softwaredemo/PNG/256x256/Warning.png" /></p>
+				<p class="text-justify">
+					In order to use this application you must login into your twitter account. Do you want to <b>continue</b>?
+				</p>
+				<form name="authenticate" method="post" action="/temperature/twitter">
+					<input type="hidden" name="terms_accept" value="true" />
+					<input type="submit" class="btn btn-primary" value="Continue" />
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
