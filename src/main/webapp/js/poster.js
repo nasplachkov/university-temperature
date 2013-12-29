@@ -47,7 +47,7 @@
 			log.append("Timer started.<br/>");
 			
 			// Update immediately
-			//createStatus();
+			createStatus();
 			
 			// Get the input value and convert it from minutes to milliseconds
 			timerId = setInterval(createStatus, intervalField.val() * 60 * 1000);
