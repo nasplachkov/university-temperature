@@ -88,6 +88,10 @@ public class Temperature {
     }
 	
 	public String getLocations(double latCenter, double longCenter, double radius) {
+		if (radius == 0) {
+			radius = 0.00001;
+		}
+		
 		ArrayList<TemperatureData> byLocations = new ArrayList<TemperatureData>();
 		TemperatureLocation center = new TemperatureLocation(latCenter, longCenter);
 		

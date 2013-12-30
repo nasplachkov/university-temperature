@@ -61,12 +61,16 @@ public class TemperatureServlet extends HttpServlet {
 			String lng = request.getParameter("long");
 			String rad = request.getParameter("rad");
 			
-			if (lat == null || lng == null || rad == null) {
+			if (lat == null || lng == null) {
 				response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
 				return;
 			}
 			
-			msg = temperature.getLocations(Double.parseDouble(lat), Double.parseDouble(lng), Double.parseDouble(rad));
+			if (rad == null) {
+				msg = temperature.getLocations(Double.parseDouble(lat), Double.parseDouble(lng), 0);
+			} else {
+				msg = temperature.getLocations(Double.parseDouble(lat), Double.parseDouble(lng), Double.parseDouble(rad));
+			}
 		}
 		
 		response.setStatus(200);
