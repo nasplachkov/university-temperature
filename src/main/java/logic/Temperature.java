@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import org.json.JSONObject;
 
 import data.TemperatureData;
+import data.TemperatureLocation;
 
 public class Temperature {
+	
+	private static double EARTH_RADIUS = 6371;	// Earth's radius in KM
 	
 	private ArrayList<TemperatureData> temps;
 
@@ -69,6 +72,43 @@ public class Temperature {
 		all.put("list", temps);
 		
 		return all.toString();
+	}
+	
+	private double distanceBetween(TemperatureLocation tl1, TemperatureLocation tl2) {
+	    double dLat = Math.toRadians(tl2.getLatitude() - tl1.getLatitude());
+	    double dLng = Math.toRadians(tl2.getLongitude() - tl1.getLongitude());
+	    double sindLat = Math.sin(dLat / 2);
+	    double sindLng = Math.sin(dLng / 2);
+	    double a = Math.pow(sindLat, 2) + Math.pow(sindLng, 2)
+	            * Math.cos(Math.toRadians(tl1.getLatitude())) * Math.cos(Math.toRadians(tl2.getLatitude()));
+	    double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+	    double dist = EARTH_RADIUS * c;
+
+	    return dist;
+    }
+	
+	public String getLocations(double latCenter, double longCenter, double radius) {
+		ArrayList<TemperatureData> byLocations = new ArrayList<TemperatureData>();
+		TemperatureLocation center = new TemperatureLocation(latCenter, longCenter);
+		
+		for (TemperatureData datum : temps) {
+			
+			// Is location in the radius?
+			if (distanceBetween(center, datum.getLocation()) <= radius) {
+				byLocations.add(datum);
+			}
+		}
+		
+		JSONObject locationsObject = new JSONObject();
+		JSONObject centerObject = new JSONObject();
+		centerObject.put("latitude", center.getLatitude());
+		centerObject.put("longitutde", center.getLongitude());
+		
+		locationsObject.put("center", centerObject);
+		locationsObject.put("radius", radius);
+		locationsObject.put("locations", byLocations);
+		
+		return locationsObject.toString();
 	}
 
 }

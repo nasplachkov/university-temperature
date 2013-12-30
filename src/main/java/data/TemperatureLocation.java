@@ -5,6 +5,11 @@ public class TemperatureLocation {
 	private double longitude;
 	private double latitude;
 	
+	public TemperatureLocation(double latitude, double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+	
 	public double getLongitude() {
 		return longitude;
 	}

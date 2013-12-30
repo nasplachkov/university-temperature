@@ -63,14 +63,13 @@ public class TemperatureRetriever {
 		data.setHumidity( (humidityMatcher.find()) ? Float.parseFloat(humidityMatcher.group(1)) : 0);
 		data.setStatus( (statusMatcher.find()) ? statusMatcher.group(1) : "");
 		
-		TemperatureLocation location = new TemperatureLocation();
+		TemperatureLocation location = null;
 		
 		if (locationMatcher.find()) {
-			location.setLatitude(Double.parseDouble(locationMatcher.group(1)));
-			location.setLongitude(Double.parseDouble(locationMatcher.group(2)));
+			location = new TemperatureLocation(Double.parseDouble(locationMatcher.group(1)),
+					Double.parseDouble(locationMatcher.group(2)));
 		} else {
-			location.setLatitude(0);
-			location.setLongitude(0);
+			location = new TemperatureLocation(0, 0);
 		}
 		data.setLocation(location);
 		

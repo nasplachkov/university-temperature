@@ -56,6 +56,17 @@ public class TemperatureServlet extends HttpServlet {
 			} else if (type.contains("hum")) {
 				msg = temperature.getHumidities();
 			}
+		} else if (path.equals("/location")) {
+			String lat = request.getParameter("lat");
+			String lng = request.getParameter("long");
+			String rad = request.getParameter("rad");
+			
+			if (lat == null || lng == null || rad == null) {
+				response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
+				return;
+			}
+			
+			msg = temperature.getLocations(Double.parseDouble(lat), Double.parseDouble(lng), Double.parseDouble(rad));
 		}
 		
 		response.setStatus(200);
