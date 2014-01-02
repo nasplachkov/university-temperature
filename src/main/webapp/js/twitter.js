@@ -29,7 +29,7 @@
 			for (var i in data.list) {
 				var temp = data.list[i];
 				
-				twitterStatus += temp.placeName + ": " + temp.temperature + " °C, " + temp.humidity + " %.\n";
+				twitterStatus += temp.placeName + ": " + temp.temperature + " Â°C, " + temp.humidity + " %.\n";
 			}
 			
 			updateStatus(twitterStatus);
