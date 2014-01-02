@@ -31,11 +31,27 @@
 		}
 		
 		_fetchData().then(function (data) {
-			//var date = new Date();
 			var row = [((tickCount - 1) * secondsPerTick) + " sec"];
 			
 			for (var i in data.list) {
-				row.push(data.list[i][dataType]);
+				var obj = {};
+				if (dataType === "temperature") {
+					obj.v = data.list[i][dataType];
+					obj.f = data.list[i][dataType] + " °C";
+				} else if (dataType === "humidity") {
+					obj.v = data.list[i][dataType];
+					obj.f = data.list[i][dataType] + " %";
+				} else {
+					if (data.list[i][dataType] === "OK") {
+						obj.v = 1;
+						obj.f = "OK";
+					} else {
+						obj.v = 0;
+						obj.f = "FAIL";
+					}
+				}
+				
+				row.push(obj);
 			}
 			
 			Data.addRow(row);
