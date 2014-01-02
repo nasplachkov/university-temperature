@@ -8,6 +8,7 @@
 		initializeChart,
 		drawChart,
 		stopFetching,
+		visualizeValues,
 		
 		Data = null,
 		Chart = null,
@@ -17,12 +18,30 @@
 		maxTicks = 12,	// 1 tick each 5 seconds = 1 minute
 		tickCount = 0,
 		secondsPerTick = 5,
-		timerId = null;
+		timerId = null,
+		
+		sources = 0,
+		maxValue = null,
+		minValue = null,
+		avgValue = 0,
+		sumValue = 0;
 	
 	stopFetching = function () {
 		clearInterval(timerId);
 		tickCount = 0;
 		timerId = null;
+		
+		sources = 0;
+		maxValue = null;
+		minValue = null;
+		avgValue = 0;
+		sumValue = 0;
+	};
+	
+	visualizeValues = function () {
+		$("#maxV").text("Maximum " + dataType + ": " + maxValue);
+		$("#minV").text("Minimum " + dataType + ": " + minValue);
+		$("#avgV").text("Average " + dataType + ": " + avgValue);
 	};
 	
 	fetchData = function () {
@@ -51,12 +70,21 @@
 					}
 				}
 				
+				// Check min, max, avg values
+				if (minValue === null || obj.v < minValue) minValue = obj.v;
+				if (maxValue === null || obj.v > maxValue) maxValue = obj.v;
+				
+				sumValue += obj.v;
+				avgValue = sumValue / (tickCount * sources);
+				
 				row.push(obj);
 			}
 			
 			Data.addRow(row);
 			
 			drawChart();
+			
+			visualizeValues();
 		}, function () {
 			console.error("Could not insert row data.");
 		}).done();
@@ -83,6 +111,7 @@
 			
 			for (var i in data.list) {
 				Data.addColumn("number", data.list[i].placeName);
+				sources++;
 			}
 			
 			fetchData();
@@ -105,27 +134,17 @@
 			
 			dataType = $("#data-type").find(":selected").text().toLowerCase();
 			maxTicks = ($("#get-interval").val() * 60) / secondsPerTick;
+			chartDiv = $("#chart").get(0);
 			
-			q.fcall(function () {
-				var chartP = $("#chart");
-				
-				if (chartP.length > 0) {
-					return chartP.get(0);
-				}
-				
-				throw new Error("Could not find the destination div.");
-			}).then(function (chartP) {
-				chartDiv = chartP;
-			}).then(function () {
-				google.load("visualization", "1", {
-					packages: ["corechart"],
-					callback: initializeChart
-				});
-			}).fail(function (err) {
-				console.error(err);
-			}).done();
+			google.load("visualization", "1", {
+				packages: ["corechart"],
+				callback: initializeChart
+			});
+			
 			$(this).text("Stop");
 			$("#chartRow").show("fast");
+			$("#valuesColumn").show("fast");
+			
 		} else {
 			stopFetching();
 			$(this).text("Start");
