@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Temperature logs</title>
+<link rel="stylesheet" type="text/css" href="./libs/bootstrap3/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="./css/logs.css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="well text-center">
+					<p class="text-justify">
+						This application uses the REST API to get the temperatures provided by DSNET
+						in the specified interval of time and display charts based on the chosen data.
+					</p>
+					<form class="form-horizontal">
+						<div class="form-group">
+							<label for="get-interval" class="col-sm-6 control-label">Interval (minutes):</label>
+							<div class="col-sm-6">
+								<input type="number" class="form-control" id="get-interval" min="0" value="1" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="type-data" class="col-sm-6 control-label">Data type:</label>
+							<div class="col-sm-6">
+								<select class="col-sm-6 form-control" id="type-data">
+									<option>Temperature</option>
+									<option>Humidity</option>
+								</select>
+							</div>
+						</div>
+					</form>
+					<button type="button" class="btn btn-info btn-lg" id="start">Start</button>
+					<div id="log" class="row"></div>
+				</div>
+			</div>
+			<div id="valuesColumn" class="col-sm-6 gone">
+				<div class="well">
+					<p id="maxT"></p>
+					<p id="avgT"></p>
+					<p id="minT"></p>
+				</div>
+			</div>
+		</div>
+		<div id="chartRow" class="row gone">
+			<div class="col-sm-12">
+				<div class="well">
+					<div id="chart"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<script type="text/javascript" src="./libs/jquery1.10/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="./libs/bootstrap3/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./libs/q/q.min.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript" src="./js/chart.js"></script>
+</body>
+</html>

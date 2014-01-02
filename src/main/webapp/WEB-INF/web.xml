@@ -4,6 +4,16 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <filter>
+  	<filter-name>CleanUrlsFilter</filter-name>
+  	<display-name>CleanUrlsFilter</display-name>
+  	<description></description>
+  	<filter-class>rest.CleanUrlsFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>CleanUrlsFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
   <servlet>
   	<servlet-name>TemperatureServlet</servlet-name>
   	<display-name>TemperatureServlet</display-name>
@@ -16,12 +26,6 @@
   	<description></description>
   	<servlet-class>rest.TwitterServlet</servlet-class>
   </servlet>
-  <servlet>
-  	<servlet-name>MapsServlet</servlet-name>
-  	<display-name>MapsServlet</display-name>
-  	<description></description>
-  	<servlet-class>rest.MapsServlet</servlet-class>
-  </servlet>
   <servlet-mapping>
   	<servlet-name>TemperatureServlet</servlet-name>
   	<url-pattern>/rest/get/*</url-pattern>
@@ -33,9 +37,5 @@
   <servlet-mapping>
   	<servlet-name>TwitterServlet</servlet-name>
   	<url-pattern>/twitter/callback</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-  	<servlet-name>MapsServlet</servlet-name>
-  	<url-pattern>/maps</url-pattern>
   </servlet-mapping>
 </web-app>
