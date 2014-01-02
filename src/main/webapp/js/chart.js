@@ -13,6 +13,7 @@
 		Chart = null,
 		
 		running = false,
+		dataType = null,
 		maxTicks = 12,	// 1 tick each 5 seconds = 1 minute
 		tickCount = 0,
 		secondsPerTick = 5,
@@ -34,7 +35,7 @@
 			var row = [((tickCount - 1) * secondsPerTick) + " sec"];
 			
 			for (var i in data.list) {
-				row.push(data.list[i].temperature);
+				row.push(data.list[i][dataType]);
 			}
 			
 			Data.addRow(row);
@@ -86,6 +87,7 @@
 	$("#start").click(function () {
 		if (!running) {
 			
+			dataType = $("#data-type").find(":selected").text().toLowerCase();
 			maxTicks = ($("#get-interval").val() * 60) / secondsPerTick;
 			
 			q.fcall(function () {
