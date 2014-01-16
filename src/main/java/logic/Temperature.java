@@ -87,19 +87,26 @@ public class Temperature {
 	    return dist;
     }
 	
-	public String getLocations(double latCenter, double longCenter, double radius) {
+	public String getLocations(double latCenter, double longCenter, double radius, String type) {
 		if (radius == 0) {
 			radius = 0.00001;
 		}
 		
-		ArrayList<TemperatureData> byLocations = new ArrayList<TemperatureData>();
+		ArrayList<Object> byLocations = new ArrayList<Object>();
 		TemperatureLocation center = new TemperatureLocation(latCenter, longCenter);
 		
 		for (TemperatureData datum : temps) {
 			
 			// Is location in the radius?
 			if (distanceBetween(center, datum.getLocation()) <= radius) {
-				byLocations.add(datum);
+				
+				if (type == null) {
+					byLocations.add(datum);
+				} else if (type.contains("temp")) {
+					byLocations.add(datum.getTemperature());
+				} else if (type.contains("hum")) {
+					byLocations.add(datum.getHumidity());
+				}
 			}
 		}
 		
@@ -110,7 +117,12 @@ public class Temperature {
 		
 		locationsObject.put("center", centerObject);
 		locationsObject.put("radius", radius);
-		locationsObject.put("locations", byLocations);
+		
+		if (type == null) {
+			locationsObject.put("locations", byLocations);
+		} else {
+			locationsObject.put(type + "List", byLocations);
+		}
 		
 		return locationsObject.toString();
 	}

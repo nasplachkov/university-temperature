@@ -60,6 +60,7 @@ public class TemperatureServlet extends HttpServlet {
 			String lat = request.getParameter("lat");
 			String lng = request.getParameter("long");
 			String rad = request.getParameter("rad");
+			String type = request.getParameter("type");
 			
 			if (lat == null || lng == null) {
 				response.sendError(HttpServletResponse.SC_PRECONDITION_FAILED);
@@ -67,9 +68,9 @@ public class TemperatureServlet extends HttpServlet {
 			}
 			
 			if (rad == null) {
-				msg = temperature.getLocations(Double.parseDouble(lat), Double.parseDouble(lng), 0);
+				msg = temperature.getLocations(Double.parseDouble(lat), Double.parseDouble(lng), 0, type);
 			} else {
-				msg = temperature.getLocations(Double.parseDouble(lat), Double.parseDouble(lng), Double.parseDouble(rad));
+				msg = temperature.getLocations(Double.parseDouble(lat), Double.parseDouble(lng), Double.parseDouble(rad), type);
 			}
 		}
 		
