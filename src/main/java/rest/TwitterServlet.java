@@ -79,7 +79,7 @@ public class TwitterServlet extends HttpServlet {
 				if (accepted.equals("true")) {
 					session.setAttribute("terms_accepted", true);
 					
-					Twitter twitter = TwitterFactory.getSingleton();
+					Twitter twitter = (new TwitterFactory()).getInstance();
 					try {
 						String baseUrl = String.format("%s://%s:%d%s", request.getScheme(), request.getServerName(), request.getServerPort(), request.getContextPath());
 						RequestToken rt = twitter.getOAuthRequestToken(baseUrl + "/twitter/callback");
